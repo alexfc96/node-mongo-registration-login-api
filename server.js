@@ -15,6 +15,9 @@ app.use(jwt());
 
 // api routes
 app.use('/users', require('./users/users.controller'));
+app.use('/wallet', require('./wallets/wallets.controller'));
+app.use('/transaction', require('./transactions/transactions.controller'));
+app.use('/currency', require('./currencies/currencies.controller'));
 
 // global error handler
 app.use(errorHandler);

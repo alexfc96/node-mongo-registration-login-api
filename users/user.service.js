@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
 const User = db.User;
+const Wallet = db.Wallet;
 
 module.exports = {
     authenticate,
@@ -45,8 +46,20 @@ async function create(userParam) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
+    // create a wallet for the user
+    let walletInfo = {
+        ownerId: user._id,
+        money: 0,
+        transactions: {}
+    }
+    console.log(walletInfo)
+    const wallet = new Wallet(walletInfo);
+    await wallet.save();
+
     // save user
     await user.save();
+
+
 }
 
 async function update(id, userParam) {

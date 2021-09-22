@@ -7,12 +7,17 @@ const Transaction = db.Transaction;
 module.exports = {
     getById,
     create,
+    getMyTransactions
     // update,
     // delete: _delete
 };
 
 async function getById(id) {
     return await Transaction.findById(id);
+}
+
+async function getMyTransactions(id) {
+    return await Transaction.find({walletId: id});
 }
 
 async function create(transactionParam) {
@@ -22,12 +27,14 @@ async function create(transactionParam) {
         throw 'Type of transaction error';
     }
 
-    // mirar si es una de las que tenemos en nuestro catalogo
+    // mirar si es una moneda de las que tenemos en nuestro catalogo
     // if(transactionParam.currency != "btc" || transactionParam.currency != "recive"){
     //     throw 'Type of currency not allowed';
     // }
 
     // mirar si tiene fondos en caso de que sea send
+    // mirar que no sea a la misma billetera
+    // mirar si existe la billetera
 
     const transaction = new Transaction(transactionParam);
 
@@ -36,6 +43,7 @@ async function create(transactionParam) {
 
     // save transaction
     await transaction.save();
+    // return await Transaction.find({walletId: id});
 
 }
 

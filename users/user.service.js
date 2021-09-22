@@ -49,16 +49,14 @@ async function create(userParam) {
     // create a wallet for the user
     let walletInfo = {
         ownerId: user._id,
-        money: 0,
-        transactions: {}
+        transactions: []
     }
-    console.log(walletInfo)
+
     const wallet = new Wallet(walletInfo);
     await wallet.save();
 
     // save user
     await user.save();
-
 
 }
 

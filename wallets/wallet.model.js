@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    ownerId: { type: Schema.Types.ObjectId, ref: 'User', trim:true },
-    money: { type: Number, required: true }
-    // transactions: [{ type: Schema.Types.ObjectId, ref: 'Transaction' }],
+    ownerId: { type: Schema.Types.ObjectId, ref: 'User', trim:true }
+    // money: { type: Number, required: true }
+    // transactions: [{ type: Schema.Types.ObjectId, ref: 'Transaction' }]
 });
 
 schema.set('toJSON', {

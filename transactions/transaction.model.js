@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     walletId: { type: Schema.Types.ObjectId, ref: 'Wallet', trim:true, required: true },
-    currency: { type: Schema.Types.ObjectId, ref: 'Currency', trim:true, required: true },
+    // currency: { type: Schema.Types.ObjectId, ref: 'Currency', trim:true, required: true },
     type: { type: String, required: true},
     amount: { type: Number, required: true },
     createdDate: { type: Date, default: Date.now }
@@ -11,7 +11,10 @@ const schema = new Schema({
 
 schema.set('toJSON', {
     virtuals: true,
-    versionKey: false
+    versionKey: false,
+    transform: function (doc, ret) {
+        delete ret._id;
+    }
 });
 
 module.exports = mongoose.model('Transaction', schema);

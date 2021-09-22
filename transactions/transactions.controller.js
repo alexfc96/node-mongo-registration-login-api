@@ -5,8 +5,8 @@ const transactionService = require('./transaction.service');
 
 // routes
 router.get('/', getAll);
+router.get('/:id', getMyTransactions);
 router.post('/new', newTransaction);
-// router.get('/current', getCurrent);
 // router.get('/:id', getById);
 // router.put('/:id', update);
 // router.delete('/:id', _delete);
@@ -16,6 +16,13 @@ module.exports = router;
 function getAll(req, res, next) {
     transactionService.getAll()
         .then(wallets => res.json(wallets))
+        .catch(err => next(err));
+}
+
+//give the transactions associated to a wallet
+function getMyTransactions(req, res, next) {
+    transactionService.getMyTransactions(req.params.id) // que pasar? req.params? id del wallet
+        .then(wallets => res.json(wallets))  // alomejor hay q devolver otra cosa
         .catch(err => next(err));
 }
 

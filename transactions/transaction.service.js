@@ -27,6 +27,9 @@ async function create(transactionParam) {
         throw 'Type of transaction error';
     }
 
+    const walletIdSender = transactionParam.idWallet;
+    delete transactionParam.idWallet;
+
     // mirar si es una moneda de las que tenemos en nuestro catalogo
     // if(transactionParam.currency != "btc" || transactionParam.currency != "recive"){
     //     throw 'Type of currency not allowed';
@@ -36,14 +39,24 @@ async function create(transactionParam) {
     // mirar que no sea a la misma billetera
     // mirar si existe la billetera
 
-    const transaction = new Transaction(transactionParam);
+    // transaction para el que va a recibir
+    transactionParam.type = "receive"
+    const transactionReceive = new Transaction(transactionParam);
 
     //saber a traves de la billetera el id del user que va ha enviado para quitarle el saldo
     //y luego añadirlo al que lo recive.
 
     // save transaction
-    await transaction.save();
-    // return await Transaction.find({walletId: id});
+    await transactionReceive.save();
+
+    //pero luego transaction para el que ha enviado
+    const objSender = {
+        walletId: walletIdSender,
+        type: "send",
+        amount: transactionParam.amount
+    }
+    const transactionSend = new Transaction(objSender);
+    await transactionSend.save();
 
 }
 
